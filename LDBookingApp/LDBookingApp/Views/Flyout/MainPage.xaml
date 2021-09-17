@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:LDBookingApp"
+    xmlns:Auth="clr-namespace:LDBookingApp.Views.Auth"
+    xmlns:Courses="clr-namespace:LDBookingApp.Views.Courses"
+    xmlns:Events="clr-namespace:LDBookingApp.Views.Events"
+    xmlns:Programmes="clr-namespace:LDBookingApp.Views.Programmes"
+    xmlns:Views="clr-namespace:LDBookingApp.Views"
+    x:Class="LDBookingApp.MainPage">
+
+    <Shell.FlyoutHeader>
+        <local:FlyoutHeader/>
+    </Shell.FlyoutHeader>
+
+    <FlyoutItem Title="MyApp"
+                FlyoutDisplayOptions="AsMultipleItems" >
+
+        <ShellContent Title="Home" Icon="" IsTabStop="True" ContentTemplate="{DataTemplate Views:Homepage}"/>
+    </FlyoutItem>
+
+    <ShellContent Title="About" Icon="" IsTabStop="True" ContentTemplate="{DataTemplate Views:AboutLD}"/>
+    <ShellContent Title="Contact" ContentTemplate="{DataTemplate Views:Contact}"/>
+    
+
+</Shell>
