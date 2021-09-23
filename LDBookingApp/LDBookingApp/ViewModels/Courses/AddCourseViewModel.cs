@@ -1,6 +1,7 @@
 ﻿using LDBookingApp.Models;
 using LDBookingApp.Services.Courses;
 using LDBookingApp.Services.Navigation;
+using LDBookingApp.Services.Programmes;
 using MvvmHelpers.Commands;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace LDBookingApp.ViewModels.Courses
     public class AddCourseViewModel : BaseViewModel
     {
         private ICourseDataService _courseDataService;
+        private IProgrammeDataService _programmeDataService;
         private INavigationService _navigationService;
         private Course _selectedCourse;
         private int _id;
@@ -22,6 +24,8 @@ namespace LDBookingApp.ViewModels.Courses
         private int _maxParticipants;
         private Programme _programme;
         public AsyncCommand AddCourseCommand { get; }
+
+        #region Course Properties
 
         public int id
         {
@@ -81,7 +85,7 @@ namespace LDBookingApp.ViewModels.Courses
                 _programme = value;
             }
         }
-        public List<Programme> programss { get; set; }
+        public List<Programme> ProgrammeList { get; set; }
         public Course SelectedCourse
         {
             get => _selectedCourse;
@@ -91,28 +95,18 @@ namespace LDBookingApp.ViewModels.Courses
                 OnPropertyChanged("SelectedCourse");
             }
         }
-        public AddCourseViewModel(ICourseDataService courseDataService, INavigationService navigationService)
+
+        #endregion
+        public AddCourseViewModel(ICourseDataService courseDataService, INavigationService navigationService, IProgrammeDataService programmeDataService)
         {
             AddCourseCommand = new AsyncCommand(() => AddCourseCommandExecuted());
-            programss = new List<Programme>()
-            {
-                new Programme()
-                {
-                    Id = new Guid().ToString(),
-                    Name = "First Programme",
-                    Description = "This is the description"
-                },
-                new Programme()
-                {
-                    Id = new Guid().ToString(),
-                    Name = "Second programme",
-                    Description = "Second Description"
-                }
-            };
 
             SelectedCourse = new Course();
             _courseDataService = courseDataService;
             _navigationService = navigationService;
+            _programmeDataService = programmeDataService;
+
+            Task.Run(async () => await GetProgrammes());
         }
 
         public async Task AddCourseCommandExecuted()
@@ -125,11 +119,16 @@ namespace LDBookingApp.ViewModels.Courses
                 CourseStart = courseStart,
                 CourseEnd = courseEnd,
                 MaxParticipents = maxParticipents,
-                ProgrammeName = programme.Name,
+                ProgrammeId = programme.Id,
                 DateAdded = DateTime.Now,
             };
             await _courseDataService.AddCourse(c);
             await _navigationService.RemovePopUp();
+        }
+
+        private async Task GetProgrammes()
+        {
+            ProgrammeList = (List<Programme>)await _programmeDataService.GetAllProgrammes();
         }
     }
 }

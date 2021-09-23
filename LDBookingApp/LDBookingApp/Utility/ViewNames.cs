@@ -11,5 +11,9 @@ namespace LDBookingApp.Utility
         public const string ViewAllCourses = "ViewAllCourses";
         public const string DeleteCourse = "DeleteCourse";
         public const string Homepage = "Homepage";
+        public const string AddProgramme = "AddProgramme";
+        public const string ViewProgramme = "ViewProgramme";
+        public const string ViewAllProgramme = "ProgrammeViewAllPage";
+        public const string DeleteProgramme = "DeleteProgramme";
     }
 }

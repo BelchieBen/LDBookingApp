@@ -22,7 +22,7 @@ namespace LDBookingApp.Services.Courses
         {
             if (db != null)
                 return;
-            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "iLearn.db");
+            var databasePath = Path.Combine(FileSystem.AppDataDirectory, "iLearnNew.db");
             db = new SQLiteAsyncConnection(databasePath);
             await db.CreateTableAsync<Course>();
         }
@@ -40,8 +40,15 @@ namespace LDBookingApp.Services.Courses
 
         public async Task AddCourse(Course c)
         {
-            //var dbNew = new SQLiteAsyncConnection(Path.Combine(FileSystem.AppDataDirectory, "iLearn.db"));
             await db.InsertAsync(c);
+            var programmes = await db.Table<Programme>().ToListAsync();
+            var filteredList = programmes.FindAll(p => p.Id == c.ProgrammeId);
+            foreach (Programme p in filteredList)
+            {
+                p.Courses = new List<Course>();
+                p.Courses.Add(c);
+            }
+            await db.InsertOrReplaceAsync(filteredList);
             CourseUpdated?.Invoke(this, new EventArgs());
         }
 

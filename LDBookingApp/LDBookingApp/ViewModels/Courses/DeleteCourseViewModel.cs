@@ -46,10 +46,6 @@ namespace LDBookingApp.ViewModels.Courses
             await _navigationService.RemoveAllPopup();
         }
 
-
-
-
-
         public override void Initialize(object parameter)
         {
             if (parameter == null)

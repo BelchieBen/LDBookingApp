@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LDBookingApp.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace LDBookingApp.Views.Programmes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProgrammeDetailPage : ContentPage
+    public partial class ViewProgramme
     {
-        public ProgrammeDetailPage()
+        public ViewProgramme()
         {
             InitializeComponent();
+            BindingContext = ViewModelLocator.ViewProgrammeViewModel;
         }
     }
 }

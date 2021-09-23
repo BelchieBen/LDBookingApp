@@ -1,12 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LDBookingApp.ViewModels.Programmes"
              x:Class="LDBookingApp.Views.Programmes.ProgrammeViewAllPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout VerticalOptions="FillAndExpand">
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" 
+                         Margin="16,16,16,0">
+                <Label Text="Current Programmes" 
+                       FontSize="Large" 
+                       VerticalOptions="Center"/>
+                <Label Text="Add" 
+                       BackgroundColor="Transparent"
+                       TextColor="#1B838B"
+                       VerticalOptions="Center"
+                       HorizontalOptions="EndAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AddCourseCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <CollectionView ItemsSource="{Binding Courses}"
+                            Margin="16">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="16"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame  
+                            HasShadow="True" 
+                            CornerRadius="10"
+                            Padding="16" 
+                            VerticalOptions="Start" 
+                            BackgroundColor="White" 
+                            BorderColor="Gray">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ProgrammeViewAllPageViewModel}}, Path=ProgrammeSelectedCommand}"
+                                        CommandParameter="{Binding .}"/>
+                            </Frame.GestureRecognizers>
+                            <Grid 
+                                RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto"
+                                ColumnDefinitions="Auto"
+                                VerticalOptions="FillAndExpand">
+                                <Label
+                                    Grid.Row="0"
+                                    Text="Course Name:"
+                                    FontAttributes="Bold"
+                                    VerticalOptions="CenterAndExpand" 
+                                    FontSize="Small"/>
+                                <Label
+                                    Grid.Row="1"
+                                    Text="{Binding Name}" 
+                                    VerticalOptions="CenterAndExpand" 
+                                    FontSize="Small"/>
+                                <Label 
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="CenterAndExpand"
+                                    Text="Start Date:" 
+                                    FontAttributes="Bold"
+                                    FontSize="Micro"/>
+                                <Label 
+                                    Grid.Row="0"
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="CenterAndExpand"
+                                    Text="{Binding CourseStart}" 
+                                    FontSize="Micro"/>
+                                <Label 
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="CenterAndExpand"
+                                    Text="End Date:" 
+                                    FontAttributes="Bold"
+                                    FontSize="Micro"/>
+                                <Label 
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="CenterAndExpand"
+                                    Text="{Binding CourseEnd}" 
+                                    FontSize="Micro"/>
+                                <BoxView 
+                                    Grid.ColumnSpan="3"
+                                    Grid.Row="2"
+                                    Color="Gray" 
+                                    HeightRequest="2" 
+                                    HorizontalOptions="Fill"/>
+                                <Label 
+                                    Grid.Row="3"
+                                    Text="Description"/>
+                                <Label 
+                                    Grid.ColumnSpan="3"
+                                    Grid.Row="4"
+                                    Text="{Binding Description}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

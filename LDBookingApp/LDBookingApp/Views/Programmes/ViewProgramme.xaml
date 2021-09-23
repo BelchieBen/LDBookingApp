@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:fontawesome="clr-namespace:LDBookingApp.Styles"            
+             x:Class="LDBookingApp.Views.Programmes.ViewProgramme">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"
+                                   HasBackgroundAnimation="True"
+                                   PositionIn="Center"
+                                   PositionOut="Center"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <StackLayout Margin="12"
+                 Padding="24"
+                 WidthRequest="600"
+                 BackgroundColor="WhiteSmoke"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+        
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+            <StackLayout HorizontalOptions="Start">
+                <Label 
+                    Text="{Binding SelectedProgramme.Name}"
+                    FontAttributes="Bold"
+                    FontSize="Large"/>
+            </StackLayout>
+            <Label 
+                    Text="{x:Static fontawesome:FontAwesomeIcons.PenAlt}"
+                    FontFamily="{StaticResource FontAwesomeSolid}"
+                    TextColor="#C7C269"
+                    FontSize="Title"
+                    Margin="10,0,0,10"
+                    HorizontalOptions="EndAndExpand"
+                    VerticalOptions="Start">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding EditModeCommand}" />
+                </Label.GestureRecognizers>
+                <Label.Triggers>
+                    <DataTrigger 
+                            TargetType="Label"
+                            Binding="{Binding EditMode}"
+                            Value="True">
+                        <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.Eye}" />
+                        <Setter Property="TextColor" Value="#8AB581" />
+                    </DataTrigger>
+
+                </Label.Triggers>
+            </Label>
+
+            <Label 
+                IsVisible="{Binding EditMode}"
+                Text="{x:Static fontawesome:FontAwesomeIcons.TrashAlt}" 
+                FontFamily="{StaticResource FontAwesomeSolid}"
+                TextColor="#D94229"
+                FontSize="Title" 
+                VerticalOptions="Start"
+                Margin="10,0,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding DeleteProgrammeCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+        <BoxView
+            Margin="0,8,0,8"
+            Color="Black"
+            HeightRequest="2"/>
+        <StackLayout>
+            <Label 
+                Text="Programme Name"
+                FontAttributes="Bold"/>
+            <Label 
+                IsVisible="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
+                Text="{Binding SelectedProgramme.Name}"/>
+            <Entry 
+                IsVisible="{Binding EditMode}"
+                Text="{Binding SelectedProgramme.Name}"/>
+        </StackLayout>
+
+        <StackLayout>
+            <Label 
+                Text="Description"
+                FontAttributes="Bold"/>
+            <Label 
+                IsVisible="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
+                Text="{Binding SelectedProgramme.Description}" />
+            <Editor
+                IsVisible="{Binding EditMode}"
+                Text="{Binding SelectedProgramme.Description}" />
+            <Button 
+                IsVisible="{Binding EditMode}"
+                Text="Save"
+                BackgroundColor="Green"
+                Command="{Binding EditProgrammeCommand}" />
+        </StackLayout>
+    </StackLayout>
+</pages:PopupPage>
