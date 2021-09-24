@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Programmes;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
 using LDBookingApp.Utility;
@@ -11,7 +12,7 @@ namespace LDBookingApp.ViewModels.Programmes
     {
         private Programme _selectedProgramme;
         private bool _editMode;
-        private IProgrammeDataService _programmeDataService;
+        private IProgrammeDataStore _programmeDataStore;
         private INavigationService _navigationService;
 
         public AsyncCommand ClosePopupCommand { get; }
@@ -39,7 +40,7 @@ namespace LDBookingApp.ViewModels.Programmes
             }
         }
 
-        public ViewProgrammeViewModel(IProgrammeDataService programmeDataService, INavigationService navigationService)
+        public ViewProgrammeViewModel(IProgrammeDataStore programmeDataStore, INavigationService navigationService)
         {
             SelectedProgramme = new Programme();
             ClosePopupCommand = new AsyncCommand(() => ClosePopupCommandExecuted());
@@ -47,7 +48,7 @@ namespace LDBookingApp.ViewModels.Programmes
             DeleteProgrammeCommand = new AsyncCommand(() => DeleteProgrammeCommandExecuted());
             EditProgrammeCommand = new AsyncCommand(() => EditProgrammeCommandExecuted());
 
-            _programmeDataService = programmeDataService;
+            _programmeDataStore = programmeDataStore;
             _navigationService = navigationService;
         }
 
@@ -68,7 +69,7 @@ namespace LDBookingApp.ViewModels.Programmes
 
         public async Task EditProgrammeCommandExecuted()
         {
-            await _programmeDataService.EditProgramme(SelectedProgramme);
+            await _programmeDataStore.UpdateProgrammeAsync(SelectedProgramme);
             await _navigationService.RemovePopUp();
         }
 

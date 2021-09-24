@@ -1,4 +1,6 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Courses;
+using LDBookingApp.Data.Programmes;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Courses;
 using LDBookingApp.Services.Dialogs;
 using LDBookingApp.Services.Navigation;
@@ -18,8 +20,8 @@ namespace LDBookingApp.ViewModels
     {
         private ObservableCollection<Course> _courses;
         private ObservableCollection<Programme> _programmes;
-        private ICourseDataService _courseDataService;
-        private IProgrammeDataService _programmeDataService;
+        private ICourseDataStore _courseDataStore;
+        private IProgrammeDataStore _programmeDataStore;
         private IDialogService _dialogService;
         private INavigationService _navigationService;
 
@@ -55,13 +57,13 @@ namespace LDBookingApp.ViewModels
 
         public bool IsBusy { get; private set; }
 
-        public HomepageViewModel(ICourseDataService courseDataService, IDialogService dialogService, INavigationService navigationService, IProgrammeDataService programmeDataService)
+        public HomepageViewModel(ICourseDataStore courseDataStore, IDialogService dialogService, INavigationService navigationService, IProgrammeDataStore programmeDataStore)
         {
             Courses = new ObservableCollection<Course>();
-            _courseDataService = courseDataService;
+            _courseDataStore = courseDataStore;
             _dialogService = dialogService;
             _navigationService = navigationService;
-            _programmeDataService = programmeDataService;
+            _programmeDataStore = programmeDataStore;
 
             AddCourseCommand = new AsyncCommand(() => AddCourseCommandExecuted());
             ViewAllCoursesCommand = new AsyncCommand(() => ViewAllCoursesCommandExecuted());
@@ -73,8 +75,8 @@ namespace LDBookingApp.ViewModels
 
             Task.Run(async () => await FetchCourses());
             Task.Run(async () => await FetchProgrammes());
-            _courseDataService.CourseUpdated += OnCourseUpdated;
-            _programmeDataService.ProgrammeUpdated += OnProgrammeUpdated;
+            _courseDataStore.CourseUpdated += OnCourseUpdated;
+            _programmeDataStore.ProgrammeUpdated += OnProgrammeUpdated;
         }
 
         #region Courses
@@ -96,7 +98,7 @@ namespace LDBookingApp.ViewModels
                 }
                 else
                 {
-                    Courses = new ObservableCollection<Course>(await _courseDataService.GetTopCourses());
+                    Courses = new ObservableCollection<Course>(await _courseDataStore.GetCoursesAsync());
                 }
             }
             catch
@@ -145,7 +147,7 @@ namespace LDBookingApp.ViewModels
                 }
                 else
                 {
-                    Programmes = new ObservableCollection<Programme>(await _programmeDataService.GetTopProgrammes());
+                    Programmes = new ObservableCollection<Programme>(await _programmeDataStore.GetProgrammesAsync());
                 }
             }
             catch

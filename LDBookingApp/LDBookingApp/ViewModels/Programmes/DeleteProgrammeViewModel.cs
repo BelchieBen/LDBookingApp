@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Programmes;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
 using MvvmHelpers.Commands;
@@ -9,7 +10,7 @@ namespace LDBookingApp.ViewModels.Programmes
     public class DeleteProgrammeViewModel : BaseViewModel
     {
         private INavigationService _navigationService;
-        private IProgrammeDataService _programmeDataService;
+        private IProgrammeDataStore _programmeDataStore;
         private Programme _selectedProgramme;
 
         public AsyncCommand DeleteProgrammeCommand { get; }
@@ -25,10 +26,10 @@ namespace LDBookingApp.ViewModels.Programmes
             }
         }
 
-        public DeleteProgrammeViewModel(INavigationService navigationService, IProgrammeDataService programmeDataService)
+        public DeleteProgrammeViewModel(INavigationService navigationService, IProgrammeDataStore programmeDataStore)
         {
             _navigationService = navigationService;
-            _programmeDataService = programmeDataService;
+            _programmeDataStore = programmeDataStore;
 
             RemovePopupCommand = new AsyncCommand(() => RemovePopupCommandExecuted());
             DeleteProgrammeCommand = new AsyncCommand(() => DeleteCourseCommandExecuted());
@@ -41,7 +42,7 @@ namespace LDBookingApp.ViewModels.Programmes
 
         public async Task DeleteCourseCommandExecuted()
         {
-            await _programmeDataService.RemoveProgramme(SelectedProgramme);
+            await _programmeDataStore.DeleteProgrammeAsync(SelectedProgramme.Id);
             await _navigationService.RemoveAllPopup();
         }
 

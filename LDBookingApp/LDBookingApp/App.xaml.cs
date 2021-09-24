@@ -1,4 +1,7 @@
-﻿using LDBookingApp.Services.Courses;
+﻿using LDBookingApp.Data.Courses;
+using LDBookingApp.Data.Programmes;
+using LDBookingApp.DatabaseContext;
+using LDBookingApp.Services.Courses;
 using LDBookingApp.Services.Dialogs;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
@@ -6,6 +9,7 @@ using LDBookingApp.Utility;
 using LDBookingApp.Views;
 using LDBookingApp.Views.Courses;
 using LDBookingApp.Views.Programmes;
+using Microsoft.EntityFrameworkCore;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
@@ -17,7 +21,10 @@ namespace LDBookingApp
         public static DialogService DialogService { get; } = new DialogService();
         public static ProgrammeDataService ProgrammeDataService { get; } = new ProgrammeDataService();
         public static NavigationService NavigationService { get; } = new NavigationService(PopupNavigation.Instance);
-        public App()
+        public static CourseDataStore CourseDataStore;
+        public static ProgrammeDataStore ProgrammeDataStore;
+        public static ApplicationDbContext ApplicationDbContext;
+        public App(string databasePath)
         {
             InitializeComponent();
 
@@ -35,6 +42,10 @@ namespace LDBookingApp
             NavigationService.Configure(ViewNames.ViewProgramme, typeof(ViewProgramme));
             NavigationService.Configure(ViewNames.ViewAllProgramme, typeof(ProgrammeViewAllPage));
             NavigationService.Configure(ViewNames.DeleteProgramme, typeof(DeleteProgramme));
+
+            ApplicationDbContext = new ApplicationDbContext(databasePath);
+            CourseDataStore = new CourseDataStore(databasePath);
+            ProgrammeDataStore = new ProgrammeDataStore(databasePath);
 
             
             MainPage = new MainPage();

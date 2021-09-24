@@ -41,14 +41,6 @@ namespace LDBookingApp.Services.Courses
         public async Task AddCourse(Course c)
         {
             await db.InsertAsync(c);
-            var programmes = await db.Table<Programme>().ToListAsync();
-            var filteredList = programmes.FindAll(p => p.Id == c.ProgrammeId);
-            foreach (Programme p in filteredList)
-            {
-                p.Courses = new List<Course>();
-                p.Courses.Add(c);
-            }
-            await db.InsertOrReplaceAsync(filteredList);
             CourseUpdated?.Invoke(this, new EventArgs());
         }
 

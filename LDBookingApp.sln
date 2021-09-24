@@ -9,7 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDBookingApp.Android", "LDB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDBookingApp.iOS", "LDBookingApp\LDBookingApp.iOS\LDBookingApp.iOS.csproj", "{8180E5B7-ECA5-453D-92B2-146EB5730865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LDBookingApp", "LDBookingApp\LDBookingApp\LDBookingApp.csproj", "{935AB868-53AC-47A7-9AFA-76A91886EB34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LDBookingApp", "LDBookingApp\LDBookingApp\LDBookingApp.csproj", "{935AB868-53AC-47A7-9AFA-76A91886EB34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrationCreator", "MigrationCreator\MigrationCreator.csproj", "{402F3531-989C-4AF5-AC7B-080B9F60657B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -171,6 +173,30 @@ Global
 		{935AB868-53AC-47A7-9AFA-76A91886EB34}.Release|x86.ActiveCfg = Release|Any CPU
 		{935AB868-53AC-47A7-9AFA-76A91886EB34}.Release|x86.Build.0 = Release|Any CPU
 		{935AB868-53AC-47A7-9AFA-76A91886EB34}.Release|x86.Deploy.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|x64.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Debug|x86.Build.0 = Debug|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|ARM.Build.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|iPhone.Build.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|x64.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|x64.Build.0 = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|x86.ActiveCfg = Release|Any CPU
+		{402F3531-989C-4AF5-AC7B-080B9F60657B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

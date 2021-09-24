@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Courses;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Courses;
 using LDBookingApp.Services.Dialogs;
 using LDBookingApp.Services.Navigation;
@@ -16,7 +17,7 @@ namespace LDBookingApp.ViewModels.Courses
     public class CoursesViewAllPageViewModel : BaseViewModel
     {
         private ObservableCollection<Course> _courses;
-        private ICourseDataService _courseDataService;
+        private ICourseDataStore _courseDataStore;
         private IDialogService _dialogService;
         private INavigationService _navigationService;
 
@@ -37,10 +38,10 @@ namespace LDBookingApp.ViewModels.Courses
 
         public bool IsBusy { get; private set; }
 
-        public CoursesViewAllPageViewModel(ICourseDataService courseDataService, IDialogService dialogService, INavigationService navigationService)
+        public CoursesViewAllPageViewModel(ICourseDataStore courseDataStore, IDialogService dialogService, INavigationService navigationService)
         {
             Courses = new ObservableCollection<Course>();
-            _courseDataService = courseDataService;
+            _courseDataStore = courseDataStore;
             _dialogService = dialogService;
             _navigationService = navigationService;
 
@@ -49,7 +50,7 @@ namespace LDBookingApp.ViewModels.Courses
             UpdateCourseCommand = new AsyncCommand<Course>((c) => UpdateCourseCommandExecuted(c));
 
             Task.Run(async () => await FetchCourses());
-            _courseDataService.CourseUpdated += OnCourseUpdated;
+            _courseDataStore.CourseUpdated += OnCourseUpdated;
         }
 
         public async void OnCourseUpdated(object sender, EventArgs e)
@@ -69,7 +70,7 @@ namespace LDBookingApp.ViewModels.Courses
                 }
                 else
                 {
-                    Courses = new ObservableCollection<Course>(await _courseDataService.GetAllCourses());
+                    Courses = new ObservableCollection<Course>(await _courseDataStore.GetCoursesAsync());
                 }
             }
             catch

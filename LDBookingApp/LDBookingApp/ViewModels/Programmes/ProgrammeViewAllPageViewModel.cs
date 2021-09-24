@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Programmes;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Dialogs;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
@@ -15,7 +16,7 @@ namespace LDBookingApp.ViewModels.Programmes
     public class ProgrammeViewAllPageViewModel : BaseViewModel
     {
         private ObservableCollection<Programme> _programmes;
-        private IProgrammeDataService _programmeDataService;
+        private IProgrammeDataStore _programmeDataStore;
         private IDialogService _dialogService;
         private INavigationService _navigationService;
 
@@ -34,10 +35,10 @@ namespace LDBookingApp.ViewModels.Programmes
 
         public bool IsBusy { get; private set; }
 
-        public ProgrammeViewAllPageViewModel(IProgrammeDataService programmeDataService,IDialogService dialogService, INavigationService navigationService)
+        public ProgrammeViewAllPageViewModel(IProgrammeDataStore programmeDataStore,IDialogService dialogService, INavigationService navigationService)
         {
             Programmes = new ObservableCollection<Programme>();
-            _programmeDataService = programmeDataService;
+            _programmeDataStore = programmeDataStore;
             _dialogService = dialogService;
             _navigationService = navigationService;
 

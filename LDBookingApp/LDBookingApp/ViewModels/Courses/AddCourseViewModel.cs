@@ -1,5 +1,5 @@
-﻿using LDBookingApp.Models;
-using LDBookingApp.Services.Courses;
+﻿using LDBookingApp.Data.Courses;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
 using MvvmHelpers.Commands;
@@ -12,7 +12,7 @@ namespace LDBookingApp.ViewModels.Courses
 {
     public class AddCourseViewModel : BaseViewModel
     {
-        private ICourseDataService _courseDataService;
+        private ICourseDataStore _courseDataStore;
         private IProgrammeDataService _programmeDataService;
         private INavigationService _navigationService;
         private Course _selectedCourse;
@@ -97,14 +97,14 @@ namespace LDBookingApp.ViewModels.Courses
         }
 
         #endregion
-        public AddCourseViewModel(ICourseDataService courseDataService, INavigationService navigationService, IProgrammeDataService programmeDataService)
+        public AddCourseViewModel(INavigationService navigationService, IProgrammeDataService programmeDataService, ICourseDataStore courseDataStore)
         {
             AddCourseCommand = new AsyncCommand(() => AddCourseCommandExecuted());
 
             SelectedCourse = new Course();
-            _courseDataService = courseDataService;
             _navigationService = navigationService;
             _programmeDataService = programmeDataService;
+            _courseDataStore = courseDataStore;
 
             Task.Run(async () => await GetProgrammes());
         }
@@ -119,10 +119,9 @@ namespace LDBookingApp.ViewModels.Courses
                 CourseStart = courseStart,
                 CourseEnd = courseEnd,
                 MaxParticipents = maxParticipents,
-                ProgrammeId = programme.Id,
                 DateAdded = DateTime.Now,
             };
-            await _courseDataService.AddCourse(c);
+            await _courseDataStore.AddCourseAsync(c);
             await _navigationService.RemovePopUp();
         }
 

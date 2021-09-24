@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Courses;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Courses;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Utility;
@@ -12,7 +13,7 @@ namespace LDBookingApp.ViewModels.Courses
     {
         private Course _selectedCourse;
         private bool _editMode;
-        private ICourseDataService _courseDataService;
+        private ICourseDataStore _courseDataStore;
         private INavigationService _navigationService;
 
         public AsyncCommand ClosePopupCommand { get; }
@@ -40,9 +41,9 @@ namespace LDBookingApp.ViewModels.Courses
             }
         }
 
-        public ViewCourseViewModel(ICourseDataService courseDataService, INavigationService navigationService)
+        public ViewCourseViewModel(ICourseDataStore courseDataStore, INavigationService navigationService)
         {
-            _courseDataService = courseDataService;
+            _courseDataStore = courseDataStore;
             _navigationService = navigationService;
 
             SelectedCourse = new Course();
@@ -68,7 +69,7 @@ namespace LDBookingApp.ViewModels.Courses
 
         public async Task UpdateCourseCommandExecuted()
         {
-            await _courseDataService.UpdateCourse(SelectedCourse);
+            await _courseDataStore.UpdateCourseAsync(SelectedCourse);
             await _navigationService.RemovePopUp();
         }
 

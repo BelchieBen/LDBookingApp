@@ -1,4 +1,5 @@
-﻿using LDBookingApp.Models;
+﻿using LDBookingApp.Data.Programmes;
+using LDBookingApp.Models;
 using LDBookingApp.Services.Navigation;
 using LDBookingApp.Services.Programmes;
 using MvvmHelpers.Commands;
@@ -10,7 +11,7 @@ namespace LDBookingApp.ViewModels.Programmes
 {
     public class AddProgrammeViewModel : BaseViewModel
     {
-        private IProgrammeDataService _programmeDataService;
+        private IProgrammeDataStore _programmeDataStore;
         private INavigationService _navigationService;
 
         private Programme _selectedProgramme;
@@ -60,10 +61,10 @@ namespace LDBookingApp.ViewModels.Programmes
 
         #endregion
 
-        public AddProgrammeViewModel(IProgrammeDataService programmeDataService, INavigationService navigationService)
+        public AddProgrammeViewModel(IProgrammeDataStore programmeDataStore, INavigationService navigationService)
         {
             AddProgrammeCommand = new AsyncCommand(() => AddProgrammeCommandExecuted());
-            _programmeDataService = programmeDataService;
+            _programmeDataStore = programmeDataStore;
             _navigationService = navigationService;
         }
 
@@ -77,7 +78,7 @@ namespace LDBookingApp.ViewModels.Programmes
                 Courses = new List<Course>(),
                 DateAdded = DateTime.Now,
             };
-            await _programmeDataService.AddProgram(p);
+            await _programmeDataStore.AddProgrammeAsync(p);
             await _navigationService.RemovePopUp();
         }
     }
